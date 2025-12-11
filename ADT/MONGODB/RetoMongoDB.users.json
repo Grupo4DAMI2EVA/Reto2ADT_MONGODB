@@ -1,0 +1,55 @@
+[{
+  "_id": 1,
+  "email": "admin@sandia.com",
+  "username": "admin",
+  "password": "Ab123456",
+  "name": "Admin",
+  "lastname": "Sandia",
+  "telephone": "123456789",
+  "role": "admin",
+  "admin_data": {
+    "current_account": "1234123412341234"
+  }
+},
+{
+  "_id": 2,
+  "email": "user1@sandia.com",
+  "username": "user1",
+  "password": "1234",
+  "name": "User 1",
+  "lastname": "Sandia",
+  "telephone": "987654321",
+  "role": "user",
+  "user_data": {
+    "gender": "MALE",
+    "card": "4321432143214321"
+  }
+},
+{
+  "_id": 3,
+  "email": "user2@sandia.com",
+  "username": "user2",
+  "password": "1234",
+  "name": "User 2",
+  "lastname": "Sandia",
+  "telephone": "987867321",
+  "role": "user",
+  "user_data": {
+    "gender": "FEMALE",
+    "card": "4321432337914321"
+  }
+},
+{
+  "_id": 4,
+  "email": "user3@sandia.com",
+  "username": "user3",
+  "password": "1234",
+  "name": "User 3",
+  "lastname": "Sandia",
+  "telephone": "687864451",
+  "role": "user",
+  "user_data": {
+    "gender": "OTHER",
+    "card": "4305332143214321"
+  }
+}]
