@@ -26,8 +26,7 @@ import model.User;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public class LoginWindowController implements Initializable
-{
+public class LoginWindowController implements Initializable {
 
     private Controller controller;
 
@@ -49,8 +48,7 @@ public class LoginWindowController implements Initializable
      *
      * @param controller the main application controller that manages business logic and data operations
      */
-    public void setController(Controller controller)
-    {
+    public void setController(Controller controller) {
         this.controller = controller;
     }
 
@@ -71,53 +69,40 @@ public class LoginWindowController implements Initializable
      * @throws IOException if there is an error loading the destination window FXML file
      */
     @FXML
-    private void handleLogin()
-    {
+    private void handleLogin() {
         String credential = credentialTextField.getText();
         String password = passwordPasswordField.getText();
 
-        if (credential.isEmpty() || password.isEmpty())
-        {
+        if (credential.isEmpty() || password.isEmpty()) {
             ShowAlert.showAlert("Error", "Please fill all the fields.", Alert.AlertType.ERROR);
             return;
         }
 
-        try
-        {
+        try {
             Profile loggedIn = controller.login(credential, password);
 
-            if (loggedIn != null)
-            {
+            if (loggedIn != null) {
                 boolean isUser = loggedIn instanceof User;
                 String fxmlPath = isUser ? "/view/UserWindow.fxml" : "/view/AdminWindow.fxml";
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
                 Parent window = loader.load();
 
-                if (isUser)
-                {
+                if (isUser) {
                     ((UserWindowController) loader.getController()).setController(this.controller);
-                }
-                else
-                {
+                } else {
                     ((AdminWindowController) loader.getController()).setController(this.controller);
                 }
 
                 Stage currentwindow = (Stage) logInBttn.getScene().getWindow();
                 currentwindow.setTitle(isUser ? "User" : "Admin");
                 currentwindow.setScene(new Scene(window));
-            }
-            else
-            {
+            } else {
                 ShowAlert.showAlert("Error", "Incorrect credentials.", Alert.AlertType.ERROR);
             }
 
-        }
-        catch (OurException ex)
-        {
+        } catch (OurException ex) {
             ShowAlert.showAlert("Error", ex.getMessage(), Alert.AlertType.ERROR);
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ShowAlert.showAlert("Error", "Error opening window.", Alert.AlertType.ERROR);
         }
     }
@@ -130,10 +115,8 @@ public class LoginWindowController implements Initializable
      *
      */
     @FXML
-    public void openSignUp()
-    {
-        try
-        {
+    public void openSignUp() {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignUpWindow.fxml"));
             Parent parentWindow = loader.load();
 
@@ -144,9 +127,7 @@ public class LoginWindowController implements Initializable
             actualWindow.setTitle("Sign Up");
             actualWindow.setResizable(false);
             actualWindow.setScene(new Scene(parentWindow));
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ShowAlert.showAlert("Error", "Error opening Sign Up window.", Alert.AlertType.ERROR);
         }
     }
@@ -158,8 +139,7 @@ public class LoginWindowController implements Initializable
      * @param rb the resources used to localize the root object, or null if the root object was not localized
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
 }
