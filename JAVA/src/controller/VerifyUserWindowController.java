@@ -23,7 +23,8 @@ import model.Profile;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public class VerifyUserWindowController implements Initializable {
+public class VerifyUserWindowController implements Initializable
+{
 
     private Controller controller;
     private Profile profile;
@@ -51,7 +52,8 @@ public class VerifyUserWindowController implements Initializable {
      * @param controller the main application controller that manages business logic and data operations
      * @param userDelete the unique identifier of the user to be deleted, or -1 if deleting the currently logged-in user
      */
-    public void setController(Controller controller, int userDelete) {
+    public void setController(Controller controller, int userDelete)
+    {
         this.controller = controller;
         this.userDelete = userDelete;
 
@@ -64,7 +66,8 @@ public class VerifyUserWindowController implements Initializable {
      *
      * @param callback the runnable function to execute after user deletion
      */
-    public void setOnUserDeletedCallback(Runnable callback) {
+    public void setOnUserDeletedCallback(Runnable callback)
+    {
         onUserDeletedCallback = callback;
     }
 
@@ -73,23 +76,28 @@ public class VerifyUserWindowController implements Initializable {
      *
      */
     @FXML
-    public void confirmButton() {
+    public void confirmButton()
+    {
         String password = passwordPasswordField.getText().trim();
 
-        if (password.isEmpty()) {
+        if (password.isEmpty())
+        {
             errorLabel.setText("Enter your password.");
             return;
         }
 
-        if (profile.getPassword().equals(password)) {
-            try {
+        if (profile.getPassword().equals(password))
+        {
+            try
+            {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VerifyActionWindow.fxml"));
                 Parent parentWindow = loader.load();
 
                 VerifyActionWindowController nextController = loader.getController();
                 nextController.setController(controller, userDelete);
 
-                if (onUserDeletedCallback != null) {
+                if (onUserDeletedCallback != null)
+                {
                     nextController.setOnUserDeletedCallback(onUserDeletedCallback);
                 }
 
@@ -97,10 +105,14 @@ public class VerifyUserWindowController implements Initializable {
                 actualWindow.setTitle("Verify your Action");
                 actualWindow.setResizable(false);
                 actualWindow.setScene(new Scene(parentWindow));
-            } catch (IOException ex) {
+            }
+            catch (IOException ex)
+            {
                 errorLabel.setText("Error loading window.");
             }
-        } else {
+        }
+        else
+        {
             errorLabel.setText("Incorrect password.");
         }
     }
@@ -109,7 +121,8 @@ public class VerifyUserWindowController implements Initializable {
      * Handles the cancellation action when the cancel button is clicked. This method closes the user verification window without performing any further actions, effectively aborting the verification process.
      */
     @FXML
-    public void cancelButton() {
+    public void cancelButton()
+    {
         Stage stage = (Stage) cancelBttn.getScene().getWindow();
         stage.close();
     }
@@ -121,6 +134,7 @@ public class VerifyUserWindowController implements Initializable {
      * @param rb the resources used to localize the root object, or null if the root object was not localized
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
     }
 }

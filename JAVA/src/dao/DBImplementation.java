@@ -21,7 +21,8 @@ import pool.ConnectionThread;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public class DBImplementation implements ModelDAO {
+public class DBImplementation implements ModelDAO
+{
 
     private final int delay = 30;
 
@@ -57,12 +58,14 @@ public class DBImplementation implements ModelDAO {
      * @return the generated user ID if insertion is successful, -1 otherwise
      * @throws OurException if the insertion fails due to SQL errors, constraint violations, or transaction issues
      */
-    private int insert(Connection con, User user) throws OurException {
+    private int insert(Connection con, User user) throws OurException
+    {
         int id = -1;
 
         try (
                 PreparedStatement stmtProfile = con.prepareStatement(SQLINSERT_PROFILE, Statement.RETURN_GENERATED_KEYS);
-                PreparedStatement stmtUser = con.prepareStatement(SQLINSERT_USER)) {
+                PreparedStatement stmtUser = con.prepareStatement(SQLINSERT_USER))
+        {
             con.setAutoCommit(false);
 
             stmtProfile.setString(1, user.getEmail());
@@ -74,12 +77,15 @@ public class DBImplementation implements ModelDAO {
 
             int profileInserted = stmtProfile.executeUpdate();
 
-            if (profileInserted == 0) {
+            if (profileInserted == 0)
+            {
                 throw new SQLException("Insert failed: profile not created.");
             }
 
-            try (ResultSet generatedKeys = stmtProfile.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
+            try (ResultSet generatedKeys = stmtProfile.getGeneratedKeys())
+            {
+                if (generatedKeys.next())
+                {
                     id = generatedKeys.getInt(1);
 
                     stmtUser.setInt(1, id);
@@ -88,19 +94,25 @@ public class DBImplementation implements ModelDAO {
 
                     int userInserted = stmtUser.executeUpdate();
 
-                    if (userInserted == 0) {
+                    if (userInserted == 0)
+                    {
                         throw new SQLException("Insert failed: user not created.");
                     }
 
                     con.commit();
-                } else {
+                }
+                else
+                {
                     throw new SQLException("Insert failed: no generated key returned.");
                 }
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             rollBack(con);
             throw new OurException(ErrorMessages.REGISTER_USER);
-        } finally {
+        } finally
+        {
             resetAutoCommit(con);
         }
 
@@ -114,13 +126,16 @@ public class DBImplementation implements ModelDAO {
      * @return an ArrayList containing all User objects from the database
      * @throws OurException if the query execution fails or data retrieval errors occur
      */
-    private ArrayList<User> selectUsers(Connection con) throws OurException {
+    private ArrayList<User> selectUsers(Connection con) throws OurException
+    {
         ArrayList<User> users = new ArrayList<>();
 
         try (
                 PreparedStatement stmt = con.prepareStatement(SQLSELECT_USERS);
-                ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
+                ResultSet rs = stmt.executeQuery())
+        {
+            while (rs.next())
+            {
                 String genderValue = rs.getString("U_GENDER");
                 Gender gender = genderValue != null ? Gender.valueOf(genderValue) : Gender.OTHER;
                 User user = new User(
@@ -136,7 +151,9 @@ public class DBImplementation implements ModelDAO {
                 );
                 users.add(user);
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             throw new OurException(ErrorMessages.GET_USERS);
         }
         return users;
@@ -150,12 +167,14 @@ public class DBImplementation implements ModelDAO {
      * @return true if the update operation was successful, false otherwise
      * @throws OurException if the update fails due to SQL errors, constraint violations, or transaction issues
      */
-    private boolean update(Connection con, User user) throws OurException {
+    private boolean update(Connection con, User user) throws OurException
+    {
         boolean success = false;
 
         try (
                 PreparedStatement stmtProfile = con.prepareStatement(SQLUPDATE_PROFILE);
-                PreparedStatement stmtUser = con.prepareStatement(SQLUPDATE_USER)) {
+                PreparedStatement stmtUser = con.prepareStatement(SQLUPDATE_USER))
+        {
             con.setAutoCommit(false);
 
             stmtProfile.setString(1, user.getPassword());
@@ -172,16 +191,20 @@ public class DBImplementation implements ModelDAO {
 
             int userUpdated = stmtUser.executeUpdate();
 
-            if (profileUpdated == 0 || userUpdated == 0) {
+            if (profileUpdated == 0 || userUpdated == 0)
+            {
                 throw new SQLException(ErrorMessages.UPDATE_USER);
             }
 
             con.commit();
             success = true;
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             rollBack(con);
             throw new OurException(ErrorMessages.UPDATE_USER);
-        } finally {
+        } finally
+        {
             resetAutoCommit(con);
         }
 
@@ -196,11 +219,15 @@ public class DBImplementation implements ModelDAO {
      * @return true if the deletion was successful, false if no user was found with the specified ID
      * @throws OurException if the deletion operation fails due to SQL errors or database constraints
      */
-    private boolean delete(Connection con, int userId) throws OurException {
-        try (PreparedStatement stmt = con.prepareStatement(SQLDELETE_USER)) {
+    private boolean delete(Connection con, int userId) throws OurException
+    {
+        try (PreparedStatement stmt = con.prepareStatement(SQLDELETE_USER))
+        {
             stmt.setInt(1, userId);
             return stmt.executeUpdate() > 0;
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             throw new OurException(ErrorMessages.DELETE_USER);
         }
     }
@@ -214,18 +241,23 @@ public class DBImplementation implements ModelDAO {
      * @return the authenticated user's Profile object (User or Admin) if credentials are valid, null otherwise
      * @throws OurException if the authentication process fails due to SQL errors or data retrieval issues
      */
-    private Profile loginProfile(Connection con, String credential, String password) throws OurException {
-        try (PreparedStatement stmt = con.prepareStatement(SQLSELECT_LOGIN)) {
+    private Profile loginProfile(Connection con, String credential, String password) throws OurException
+    {
+        try (PreparedStatement stmt = con.prepareStatement(SQLSELECT_LOGIN))
+        {
             stmt.setString(1, credential);
             stmt.setString(2, credential);
             stmt.setString(3, password);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
+            try (ResultSet rs = stmt.executeQuery())
+            {
+                if (rs.next())
+                {
                     String gender = rs.getString("U_GENDER");
                     String admin = rs.getString("A_CURRENT_ACCOUNT");
 
-                    if (gender != null) {
+                    if (gender != null)
+                    {
                         return new User(
                                 rs.getInt("P_ID"),
                                 rs.getString("P_EMAIL"),
@@ -237,7 +269,9 @@ public class DBImplementation implements ModelDAO {
                                 Gender.valueOf(gender),
                                 rs.getString("U_CARD")
                         );
-                    } else if (admin != null) {
+                    }
+                    else if (admin != null)
+                    {
                         return new Admin(
                                 rs.getInt("P_ID"),
                                 rs.getString("P_EMAIL"),
@@ -253,7 +287,9 @@ public class DBImplementation implements ModelDAO {
 
                 return null;
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             throw new OurException(ErrorMessages.LOGIN);
         }
     }
@@ -267,26 +303,34 @@ public class DBImplementation implements ModelDAO {
      * @return a HashMap indicating which credentials already exist with keys "email" and "username" and boolean values
      * @throws OurException if the verification process fails due to SQL errors
      */
-    private HashMap<String, Boolean> checkCredentialsExistence(Connection con, String email, String username) throws OurException {
+    private HashMap<String, Boolean> checkCredentialsExistence(Connection con, String email, String username) throws OurException
+    {
         HashMap<String, Boolean> exists = new HashMap<>();
         exists.put("email", false);
         exists.put("username", false);
 
-        try (PreparedStatement stmt = con.prepareStatement(SQLCHECK_CREDENTIALS)) {
+        try (PreparedStatement stmt = con.prepareStatement(SQLCHECK_CREDENTIALS))
+        {
             stmt.setString(1, email);
             stmt.setString(2, username);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    if (email.equals(rs.getString("P_EMAIL"))) {
+            try (ResultSet rs = stmt.executeQuery())
+            {
+                while (rs.next())
+                {
+                    if (email.equals(rs.getString("P_EMAIL")))
+                    {
                         exists.put("email", true);
                     }
-                    if (username.equals(rs.getString("P_USERNAME"))) {
+                    if (username.equals(rs.getString("P_USERNAME")))
+                    {
                         exists.put("username", true);
                     }
                 }
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             throw new OurException(ErrorMessages.VERIFY_CREDENTIALS);
         }
         return exists;
@@ -300,15 +344,18 @@ public class DBImplementation implements ModelDAO {
      * @throws InterruptedException if the waiting thread is interrupted
      * @throws OurException if the connection timeout is exceeded
      */
-    private Connection waitForConnection(ConnectionThread thread) throws InterruptedException, OurException {
+    private Connection waitForConnection(ConnectionThread thread) throws InterruptedException, OurException
+    {
         int attempts = 0;
 
-        while (!thread.isReady() && attempts < 50) {
+        while (!thread.isReady() && attempts < 50)
+        {
             Thread.sleep(10);
             attempts++;
         }
 
-        if (!thread.isReady()) {
+        if (!thread.isReady())
+        {
             throw new OurException(ErrorMessages.TIMEOUT);
         }
 
@@ -321,12 +368,17 @@ public class DBImplementation implements ModelDAO {
      * @param con the database connection to roll back the transaction on
      * @throws OurException if the rollback operation fails
      */
-    private void rollBack(Connection con) throws OurException {
-        try {
-            if (con != null) {
+    private void rollBack(Connection con) throws OurException
+    {
+        try
+        {
+            if (con != null)
+            {
                 con.rollback();
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             throw new OurException(ErrorMessages.ROLLBACK);
         }
     }
@@ -337,12 +389,17 @@ public class DBImplementation implements ModelDAO {
      * @param con the database connection to reset
      * @throws OurException if resetting auto-commit fails
      */
-    private void resetAutoCommit(Connection con) throws OurException {
-        try {
-            if (con != null) {
+    private void resetAutoCommit(Connection con) throws OurException
+    {
+        try
+        {
+            if (con != null)
+            {
                 con.setAutoCommit(true);
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             throw new OurException(ErrorMessages.RESET_AUTOCOMMIT);
         }
     }
@@ -356,14 +413,19 @@ public class DBImplementation implements ModelDAO {
      * @throws OurException if authentication fails due to database errors or system issues
      */
     @Override
-    public Profile login(String credential, String password) throws OurException {
-        try (Connection con = ConnectionPool.getConnection()) {
+    public Profile login(String credential, String password) throws OurException
+    {
+        try (Connection con = ConnectionPool.getConnection())
+        {
             Profile profile = loginProfile(con, credential, password);
-            if (profile != null) {
+            if (profile != null)
+            {
                 LoggedProfile.getInstance().setProfile(profile);
             }
             return profile;
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             throw new OurException(ErrorMessages.LOGIN);
         }
     }
@@ -376,34 +438,45 @@ public class DBImplementation implements ModelDAO {
      * @throws OurException if registration fails due to duplicate credentials, database constraints, or system errors
      */
     @Override
-    public User register(User user) throws OurException {
+    public User register(User user) throws OurException
+    {
         ConnectionThread thread = new ConnectionThread(delay);
         thread.start();
 
-        try {
+        try
+        {
             Connection con = waitForConnection(thread);
             Map<String, Boolean> existing = checkCredentialsExistence(con, user.getEmail(), user.getUsername());
 
-            if (existing.get("email") && existing.get("username")) {
+            if (existing.get("email") && existing.get("username"))
+            {
                 throw new OurException("Both email and username already exist");
-            } else if (existing.get("email")) {
+            }
+            else if (existing.get("email"))
+            {
                 throw new OurException("Email already exists");
-            } else if (existing.get("username")) {
+            }
+            else if (existing.get("username"))
+            {
                 throw new OurException("Username already exists");
             }
 
             int id = insert(con, user);
 
-            if (id == -1) {
+            if (id == -1)
+            {
                 throw new OurException(ErrorMessages.REGISTER_USER);
             }
 
             user.setId(id);
 
             return user;
-        } catch (InterruptedException ex) {
+        }
+        catch (InterruptedException ex)
+        {
             throw new OurException(ErrorMessages.REGISTER_USER);
-        } finally {
+        } finally
+        {
             thread.releaseConnection();
         }
     }
@@ -415,16 +488,21 @@ public class DBImplementation implements ModelDAO {
      * @throws OurException if the user retrieval operation fails due to database connectivity issues or data access errors
      */
     @Override
-    public ArrayList<User> getUsers() throws OurException {
+    public ArrayList<User> getUsers() throws OurException
+    {
         ConnectionThread thread = new ConnectionThread(delay);
         thread.start();
 
-        try {
+        try
+        {
             Connection con = waitForConnection(thread);
             return selectUsers(con);
-        } catch (InterruptedException ex) {
+        }
+        catch (InterruptedException ex)
+        {
             throw new OurException(ErrorMessages.GET_USERS);
-        } finally {
+        } finally
+        {
             thread.releaseConnection();
         }
     }
@@ -437,16 +515,21 @@ public class DBImplementation implements ModelDAO {
      * @throws OurException if the update operation fails due to validation errors, database constraints violations, or data access issues
      */
     @Override
-    public boolean updateUser(User user) throws OurException {
+    public boolean updateUser(User user) throws OurException
+    {
         ConnectionThread thread = new ConnectionThread(delay);
         thread.start();
 
-        try {
+        try
+        {
             Connection con = waitForConnection(thread);
             return update(con, user);
-        } catch (InterruptedException ex) {
+        }
+        catch (InterruptedException ex)
+        {
             throw new OurException(ErrorMessages.UPDATE_USER);
-        } finally {
+        } finally
+        {
             thread.releaseConnection();
         }
     }
@@ -459,16 +542,21 @@ public class DBImplementation implements ModelDAO {
      * @throws OurException if the deletion operation fails due to database constraints, referential integrity issues, or data access errors
      */
     @Override
-    public boolean deleteUser(int id) throws OurException {
+    public boolean deleteUser(int id) throws OurException
+    {
         ConnectionThread thread = new ConnectionThread(delay);
         thread.start();
 
-        try {
+        try
+        {
             Connection con = waitForConnection(thread);
             return delete(con, id);
-        } catch (InterruptedException ex) {
+        }
+        catch (InterruptedException ex)
+        {
             throw new OurException(ErrorMessages.DELETE_USER);
-        } finally {
+        } finally
+        {
             thread.releaseConnection();
         }
     }

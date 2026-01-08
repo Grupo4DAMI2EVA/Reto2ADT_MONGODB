@@ -9,7 +9,8 @@ import model.User;
 /**
  * Mock implementation of ModelDAO for testing purposes. This class provides a simulated data access layer that can be configured to return predefined responses or throw exceptions for testing various application scenarios without requiring a real database connection.
  */
-public class MockModelDAO implements ModelDAO {
+public class MockModelDAO implements ModelDAO
+{
 
     private User mockUser;
     private Profile mockProfile;
@@ -20,7 +21,8 @@ public class MockModelDAO implements ModelDAO {
     /**
      * Constructs a new MockModelDAO with default test data. Initializes the mock with a sample user and empty exception state.
      */
-    public MockModelDAO() {
+    public MockModelDAO()
+    {
         this.mockUser = new User(1, "test@test.com", "testuser", "Ab123456",
                 "Test", "User", "123456789", Gender.MALE, "1234567890123456");
         this.mockProfile = mockUser;
@@ -35,7 +37,8 @@ public class MockModelDAO implements ModelDAO {
      * @param shouldThrow if true, subsequent method calls will throw the specified exception
      * @param exception the exception to throw when shouldThrow is true
      */
-    public void setShouldThrowException(boolean shouldThrow, OurException exception) {
+    public void setShouldThrowException(boolean shouldThrow, OurException exception)
+    {
         this.shouldThrowException = shouldThrow;
         this.exceptionToThrow = exception;
     }
@@ -45,7 +48,8 @@ public class MockModelDAO implements ModelDAO {
      *
      * @param user the User object to set as the mock response for user operations
      */
-    public void setMockUser(User user) {
+    public void setMockUser(User user)
+    {
         this.mockUser = user;
         this.mockProfile = user;
     }
@@ -58,8 +62,10 @@ public class MockModelDAO implements ModelDAO {
      * @throws OurException if configured to throw exceptions
      */
     @Override
-    public User register(User user) throws OurException {
-        if (shouldThrowException) {
+    public User register(User user) throws OurException
+    {
+        if (shouldThrowException)
+        {
             throw exceptionToThrow;
         }
         return mockUser;
@@ -74,8 +80,10 @@ public class MockModelDAO implements ModelDAO {
      * @throws OurException if configured to throw exceptions
      */
     @Override
-    public Profile login(String credential, String password) throws OurException {
-        if (shouldThrowException) {
+    public Profile login(String credential, String password) throws OurException
+    {
+        if (shouldThrowException)
+        {
             throw exceptionToThrow;
         }
         return mockProfile;
@@ -88,8 +96,10 @@ public class MockModelDAO implements ModelDAO {
      * @throws OurException if configured to throw exceptions
      */
     @Override
-    public ArrayList<User> getUsers() throws OurException {
-        if (shouldThrowException) {
+    public ArrayList<User> getUsers() throws OurException
+    {
+        if (shouldThrowException)
+        {
             throw exceptionToThrow;
         }
         return mockUsers;
@@ -103,8 +113,10 @@ public class MockModelDAO implements ModelDAO {
      * @throws OurException if configured to throw exceptions
      */
     @Override
-    public boolean updateUser(User user) throws OurException {
-        if (shouldThrowException) {
+    public boolean updateUser(User user) throws OurException
+    {
+        if (shouldThrowException)
+        {
             throw exceptionToThrow;
         }
         return true;
@@ -118,8 +130,10 @@ public class MockModelDAO implements ModelDAO {
      * @throws OurException if configured to throw exceptions
      */
     @Override
-    public boolean deleteUser(int id) throws OurException {
-        if (shouldThrowException) {
+    public boolean deleteUser(int id) throws OurException
+    {
+        if (shouldThrowException)
+        {
             throw exceptionToThrow;
         }
         return id > 0;

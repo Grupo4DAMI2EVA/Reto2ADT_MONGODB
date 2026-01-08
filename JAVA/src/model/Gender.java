@@ -5,7 +5,8 @@ package model;
  *
  * The gender options include traditional binary choices as well as an inclusive option to accommodate diverse user preferences and identities.
  */
-public enum Gender {
+public enum Gender
+{
     MALE,
     FEMALE,
     OTHER

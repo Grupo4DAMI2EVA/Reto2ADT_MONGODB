@@ -21,7 +21,8 @@ import javafx.scene.image.Image;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public class Controller {
+public class Controller
+{
 
     private final ModelDAO dao;
 
@@ -30,7 +31,8 @@ public class Controller {
      *
      * @param dao the ModelDAO implementation to use for data access operations
      */
-    public Controller(ModelDAO dao) {
+    public Controller(ModelDAO dao)
+    {
         this.dao = dao;
     }
 
@@ -39,10 +41,14 @@ public class Controller {
      *
      * @throws OurException if the database connection cannot be established, containing details about the connection failure
      */
-    public Controller() throws OurException {
-        try {
+    public Controller() throws OurException
+    {
+        try
+        {
             dao = new DBImplementation();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             throw new OurException(ErrorMessages.DATABASE);
         }
     }
@@ -53,7 +59,8 @@ public class Controller {
      * @param stage the primary stage to be used for displaying the application window
      * @throws IOException if the FXML file for the login window cannot be loaded or if there are issues with the resource loading process
      */
-    public void showWindow(Stage stage) throws IOException {
+    public void showWindow(Stage stage) throws IOException
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginWindow.fxml"));
         Parent root = loader.load();
 
@@ -75,7 +82,8 @@ public class Controller {
      * @return the registered User object, typically with generated identifiers and any system-assigned values
      * @throws OurException if the registration process fails due to validation errors, duplicate users, or database constraints violations
      */
-    public User register(User user) throws OurException {
+    public User register(User user) throws OurException
+    {
         return dao.register(user);
     }
 
@@ -87,7 +95,8 @@ public class Controller {
      * @return the authenticated user's Profile object containing user information and access privileges
      * @throws OurException if authentication fails due to invalid credentials, user not found, or database access issues
      */
-    public Profile login(String credential, String password) throws OurException {
+    public Profile login(String credential, String password) throws OurException
+    {
         return dao.login(credential, password);
     }
 
@@ -97,7 +106,8 @@ public class Controller {
      * @return an ArrayList containing all User objects in the system
      * @throws OurException if the user retrieval operation fails due to database connectivity issues or data access errors
      */
-    public ArrayList<User> getUsers() throws OurException {
+    public ArrayList<User> getUsers() throws OurException
+    {
         return dao.getUsers();
     }
 
@@ -108,7 +118,8 @@ public class Controller {
      * @return true if the update operation was successful, false if no changes were made or the operation did not affect any records
      * @throws OurException if the update operation fails due to validation errors, database constraints violations, or data access issues
      */
-    public boolean updateUser(User user) throws OurException {
+    public boolean updateUser(User user) throws OurException
+    {
         return dao.updateUser(user);
     }
 
@@ -119,7 +130,8 @@ public class Controller {
      * @return true if the deletion was successful, false if no user was found with the specified ID or the operation did not affect any records
      * @throws OurException if the deletion operation fails due to database constraints, referential integrity issues, or data access errors
      */
-    public boolean deleteUser(int id) throws OurException {
+    public boolean deleteUser(int id) throws OurException
+    {
         return dao.deleteUser(id);
     }
 }

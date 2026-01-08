@@ -7,7 +7,8 @@ package model;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public abstract class Profile {
+public abstract class Profile
+{
 
     protected int p_id;
     protected String p_email;
@@ -20,7 +21,8 @@ public abstract class Profile {
     /**
      * Default constructor that initializes all profile attributes to empty values. The ID is set to -1 to indicate an unpersisted profile that hasn't been assigned a database identifier yet.
      */
-    public Profile() {
+    public Profile()
+    {
         this.p_id = -1;
         this.p_email = "";
         this.p_username = "";
@@ -41,7 +43,8 @@ public abstract class Profile {
      * @param p_lastname the last name of the profile owner
      * @param p_telephone the telephone number of the profile owner
      */
-    public Profile(int p_id, String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone) {
+    public Profile(int p_id, String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone)
+    {
         this.p_id = p_id;
         this.p_email = p_email;
         this.p_username = p_username;
@@ -61,7 +64,8 @@ public abstract class Profile {
      * @param p_lastname the last name of the profile owner
      * @param p_telephone the telephone number of the profile owner
      */
-    public Profile(String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone) {
+    public Profile(String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone)
+    {
         this.p_id = -1;
         this.p_email = p_email;
         this.p_username = p_username;
@@ -76,7 +80,8 @@ public abstract class Profile {
      *
      * @return the profile ID, or -1 if the profile hasn't been persisted
      */
-    public int getId() {
+    public int getId()
+    {
         return p_id;
     }
 
@@ -85,7 +90,8 @@ public abstract class Profile {
      *
      * @param p_id the new ID to assign to the profile
      */
-    public void setId(int p_id) {
+    public void setId(int p_id)
+    {
         this.p_id = p_id;
     }
 
@@ -94,7 +100,8 @@ public abstract class Profile {
      *
      * @return the profile email address
      */
-    public String getEmail() {
+    public String getEmail()
+    {
         return p_email;
     }
 
@@ -103,7 +110,8 @@ public abstract class Profile {
      *
      * @param p_email the new email address to assign to the profile
      */
-    public void setEmail(String p_email) {
+    public void setEmail(String p_email)
+    {
         this.p_email = p_email;
     }
 
@@ -112,7 +120,8 @@ public abstract class Profile {
      *
      * @return the profile username
      */
-    public String getUsername() {
+    public String getUsername()
+    {
         return p_username;
     }
 
@@ -121,7 +130,8 @@ public abstract class Profile {
      *
      * @param p_username the new username to assign to the profile
      */
-    public void setUsername(String p_username) {
+    public void setUsername(String p_username)
+    {
         this.p_username = p_username;
     }
 
@@ -130,7 +140,8 @@ public abstract class Profile {
      *
      * @return the profile password
      */
-    public String getPassword() {
+    public String getPassword()
+    {
         return p_password;
     }
 
@@ -139,7 +150,8 @@ public abstract class Profile {
      *
      * @param p_password the new password to assign to the profile
      */
-    public void setPassword(String p_password) {
+    public void setPassword(String p_password)
+    {
         this.p_password = p_password;
     }
 
@@ -148,7 +160,8 @@ public abstract class Profile {
      *
      * @return the profile owner's first name
      */
-    public String getName() {
+    public String getName()
+    {
         return p_name;
     }
 
@@ -157,7 +170,8 @@ public abstract class Profile {
      *
      * @param p_name the new first name to assign to the profile
      */
-    public void setName(String p_name) {
+    public void setName(String p_name)
+    {
         this.p_name = p_name;
     }
 
@@ -166,7 +180,8 @@ public abstract class Profile {
      *
      * @return the profile owner's last name
      */
-    public String getLastname() {
+    public String getLastname()
+    {
         return p_lastname;
     }
 
@@ -175,7 +190,8 @@ public abstract class Profile {
      *
      * @param p_lastname the new last name to assign to the profile
      */
-    public void setLastname(String p_lastname) {
+    public void setLastname(String p_lastname)
+    {
         this.p_lastname = p_lastname;
     }
 
@@ -184,7 +200,8 @@ public abstract class Profile {
      *
      * @return the profile owner's telephone number
      */
-    public String getTelephone() {
+    public String getTelephone()
+    {
         return p_telephone;
     }
 
@@ -193,7 +210,8 @@ public abstract class Profile {
      *
      * @param p_telephone the new telephone number to assign to the profile
      */
-    public void setTelephone(String p_telephone) {
+    public void setTelephone(String p_telephone)
+    {
         this.p_telephone = p_telephone;
     }
 
@@ -203,7 +221,8 @@ public abstract class Profile {
      * @return a string containing all profile attributes
      */
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "ID: " + p_id + ", Email: " + p_email + ", Username: " + p_username + ", Password: " + p_password + ", Name: " + p_name + ", Last name: " + p_lastname
                 + ", Telephone: " + p_telephone;
     }

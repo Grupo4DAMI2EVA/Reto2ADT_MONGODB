@@ -27,7 +27,8 @@ import model.User;
  *
  * The controller implements JavaFX Initializable interface to properly initialize the UI components and set up input validation handlers.
  */
-public class SignUpWindowController implements Initializable {
+public class SignUpWindowController implements Initializable
+{
 
     private Controller controller;
 
@@ -88,7 +89,8 @@ public class SignUpWindowController implements Initializable {
      *
      * @param controller the main application controller that manages business logic and data operations
      */
-    public void setController(Controller controller) {
+    public void setController(Controller controller)
+    {
         this.controller = controller;
     }
 
@@ -99,8 +101,10 @@ public class SignUpWindowController implements Initializable {
      *
      */
     @FXML
-    public void handleSignUp() {
-        if (!validateFields()) {
+    public void handleSignUp()
+    {
+        if (!validateFields())
+        {
             ShowAlert.showAlert("Validation Error",
                     "Please fill all required fields correctly:\n\n"
                     + "- Telephone must be exactly 9 digits\n"
@@ -118,9 +122,12 @@ public class SignUpWindowController implements Initializable {
         String telephone = telephoneTextField.getText().trim();
 
         Gender gender = Gender.OTHER;
-        if (maleRadioButton.isSelected()) {
+        if (maleRadioButton.isSelected())
+        {
             gender = Gender.MALE;
-        } else if (femaleRadioButton.isSelected()) {
+        }
+        else if (femaleRadioButton.isSelected())
+        {
             gender = Gender.FEMALE;
         }
 
@@ -129,15 +136,18 @@ public class SignUpWindowController implements Initializable {
                 + cardNumber3TextField.getText()
                 + cardNumber4TextField.getText();
 
-        try {
+        try
+        {
             User user = new User(email, username, password, name, lastname, telephone, gender, cardNumber);
 
             User registeredUser = controller.register(user);
 
-            if (registeredUser != null) {
+            if (registeredUser != null)
+            {
                 Profile loggedIn = controller.login(username, password);
 
-                if (loggedIn != null) {
+                if (loggedIn != null)
+                {
                     String fxmlPath = "/view/UserWindow.fxml";
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
                     Parent window = loader.load();
@@ -151,16 +161,24 @@ public class SignUpWindowController implements Initializable {
 
                     ShowAlert.showAlert("Success", "Account created successfully!", Alert.AlertType.INFORMATION);
                     resetFieldStyles();
-                } else {
+                }
+                else
+                {
                     ShowAlert.showAlert("Error", "Account created but login failed.", Alert.AlertType.ERROR);
                 }
-            } else {
+            }
+            else
+            {
                 ShowAlert.showAlert("Error", "User registration failed. Please try again.", Alert.AlertType.ERROR);
             }
 
-        } catch (OurException ex) {
+        }
+        catch (OurException ex)
+        {
             ShowAlert.showAlert("Error", ex.getMessage(), Alert.AlertType.ERROR);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ShowAlert.showAlert("Error", "Error opening User window.", Alert.AlertType.ERROR);
         }
     }
@@ -170,8 +188,10 @@ public class SignUpWindowController implements Initializable {
      *
      */
     @FXML
-    public void openLogin() {
-        try {
+    public void openLogin()
+    {
+        try
+        {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginWindow.fxml"));
             Parent parentWindow = loader.load();
             LoginWindowController nextController = loader.getController();
@@ -181,7 +201,9 @@ public class SignUpWindowController implements Initializable {
             actualWindow.setTitle("Logi In");
             actualWindow.setResizable(false);
             actualWindow.setScene(new Scene(parentWindow));
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ShowAlert.showAlert("Error", "Error opening Login window.", Alert.AlertType.ERROR);
         }
     }
@@ -191,36 +213,43 @@ public class SignUpWindowController implements Initializable {
      *
      * @return true if all fields pass validation, false if any validation rule is violated
      */
-    private boolean validateFields() {
+    private boolean validateFields()
+    {
         boolean isValid = true;
         resetFieldStyles();
 
-        if (usernameTextField.getText().trim().isEmpty()) {
+        if (usernameTextField.getText().trim().isEmpty())
+        {
             usernameTextField.setStyle(ERROR_STYLE);
             isValid = false;
         }
 
-        if (emailTextField.getText().trim().isEmpty() || !isValidEmail(emailTextField.getText().trim())) {
+        if (emailTextField.getText().trim().isEmpty() || !isValidEmail(emailTextField.getText().trim()))
+        {
             emailTextField.setStyle(ERROR_STYLE);
             isValid = false;
         }
 
-        if (nameTextField.getText().trim().isEmpty()) {
+        if (nameTextField.getText().trim().isEmpty())
+        {
             nameTextField.setStyle(ERROR_STYLE);
             isValid = false;
         }
 
-        if (lastnameTextField.getText().trim().isEmpty()) {
+        if (lastnameTextField.getText().trim().isEmpty())
+        {
             lastnameTextField.setStyle(ERROR_STYLE);
             isValid = false;
         }
 
-        if (telephoneTextField.getText().trim().isEmpty() || !isValidTelephone(telephoneTextField.getText().trim())) {
+        if (telephoneTextField.getText().trim().isEmpty() || !isValidTelephone(telephoneTextField.getText().trim()))
+        {
             telephoneTextField.setStyle(ERROR_STYLE);
             isValid = false;
         }
 
-        if (passwordPasswordField.getText().trim().isEmpty() || !isValidPassword(passwordPasswordField.getText().trim())) {
+        if (passwordPasswordField.getText().trim().isEmpty() || !isValidPassword(passwordPasswordField.getText().trim()))
+        {
             passwordPasswordField.setStyle(ERROR_STYLE);
             isValid = false;
         }
@@ -228,7 +257,8 @@ public class SignUpWindowController implements Initializable {
         String card = cardNumber1TextField.getText() + cardNumber2TextField.getText()
                 + cardNumber3TextField.getText() + cardNumber4TextField.getText();
 
-        if (card.isEmpty() || card.length() != 16) {
+        if (card.isEmpty() || card.length() != 16)
+        {
             cardNumber1TextField.setStyle(ERROR_STYLE);
             cardNumber2TextField.setStyle(ERROR_STYLE);
             cardNumber3TextField.setStyle(ERROR_STYLE);
@@ -242,7 +272,8 @@ public class SignUpWindowController implements Initializable {
     /**
      * Resets the visual style of all input fields to their normal state. This method removes any error styling applied during validation and restores the default appearance of all form fields.
      */
-    private void resetFieldStyles() {
+    private void resetFieldStyles()
+    {
         usernameTextField.setStyle(NORMAL_STYLE);
         emailTextField.setStyle(NORMAL_STYLE);
         nameTextField.setStyle(NORMAL_STYLE);
@@ -261,7 +292,8 @@ public class SignUpWindowController implements Initializable {
      * @param email the email address string to validate
      * @return true if the email address matches the required format, false otherwise
      */
-    private boolean isValidEmail(String email) {
+    private boolean isValidEmail(String email)
+    {
         return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     }
 
@@ -271,7 +303,8 @@ public class SignUpWindowController implements Initializable {
      * @param telephone the telephone number string to validate
      * @return true if the telephone number matches the required format, false otherwise
      */
-    private boolean isValidTelephone(String telephone) {
+    private boolean isValidTelephone(String telephone)
+    {
         return telephone.matches("^[0-9]{9}$");
     }
 
@@ -281,22 +314,26 @@ public class SignUpWindowController implements Initializable {
      * @param password the password string to validate
      * @return true if the password meets all security requirements, false otherwise
      */
-    private boolean isValidPassword(String password) {
+    private boolean isValidPassword(String password)
+    {
         return password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$");
     }
 
     /**
      * Configures the telephone text field with input validation and formatting. This method adds a text change listener that restricts input to numeric characters only and enforces a maximum length of 9 digits for telephone numbers.
      */
-    private void configureTelephone() {
-        telephoneTextField.textProperty().addListener((obs, oldValue, newValue)
-                -> {
-            if (!newValue.matches("\\d*")) {
+    private void configureTelephone()
+    {
+        telephoneTextField.textProperty().addListener((obs, oldValue, newValue) ->
+        {
+            if (!newValue.matches("\\d*"))
+            {
                 telephoneTextField.setText(newValue.replaceAll("[^\\d]", ""));
                 return;
             }
 
-            if (newValue.length() > 9) {
+            if (newValue.length() > 9)
+            {
                 telephoneTextField.setText(oldValue);
             }
         });
@@ -305,39 +342,45 @@ public class SignUpWindowController implements Initializable {
     /**
      * Configures the credit card number text fields with input validation and navigation. This method sets up text change listeners for all four card number segments that enforce numeric-only input, limit each segment to 4 characters, and provide automatic navigation between segments when filled or emptied.
      */
-    private void configureCardNumber() {
-        TextField[] cardFields
-                = {
-                    cardNumber1TextField, cardNumber2TextField, cardNumber3TextField, cardNumber4TextField
-                };
+    private void configureCardNumber()
+    {
+        TextField[] cardFields =
+        {
+            cardNumber1TextField, cardNumber2TextField, cardNumber3TextField, cardNumber4TextField
+        };
 
-        for (int i = 0; i < cardFields.length; i++) {
+        for (int i = 0; i < cardFields.length; i++)
+        {
             final TextField currentField = cardFields[i];
             final TextField prevField = (i > 0) ? cardFields[i - 1] : null;
             final TextField nextField = (i < cardFields.length - 1) ? cardFields[i + 1] : null;
 
-            currentField.textProperty().addListener((obs, oldValue, newValue)
-                    -> {
+            currentField.textProperty().addListener((obs, oldValue, newValue) ->
+            {
                 // Filter for only numbers
-                if (!newValue.matches("\\d*")) {
+                if (!newValue.matches("\\d*"))
+                {
                     currentField.setText(newValue.replaceAll("[^\\d]", ""));
                     return;
                 }
 
                 // Filter for no more than 4 characters
-                if (newValue.length() > 4) {
+                if (newValue.length() > 4)
+                {
                     currentField.setText(oldValue);
                     return;
                 }
 
                 // Filter for change TextField when there are 4 characters
-                if (newValue.length() == 4 && nextField != null) {
+                if (newValue.length() == 4 && nextField != null)
+                {
                     nextField.requestFocus();
                     nextField.positionCaret(nextField.getText().length()); // When change to the next TextField dont select all the content 
                 }
 
                 // Filter to change TextField when you deleted all the characters
-                if (newValue.isEmpty() && prevField != null) {
+                if (newValue.isEmpty() && prevField != null)
+                {
                     prevField.requestFocus();
                     prevField.positionCaret(prevField.getText().length()); // When change to the previous TextField dont select all the content
                 }
@@ -352,7 +395,8 @@ public class SignUpWindowController implements Initializable {
      * @param rb the resources used to localize the root object, or null if the root object was not localized
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         configureCardNumber();
         configureTelephone();
     }

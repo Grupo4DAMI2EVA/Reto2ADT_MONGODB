@@ -5,7 +5,8 @@ package model;
  *
  * User objects are used throughout the system for authentication, profile management, and personalization features.
  */
-public class User extends Profile {
+public class User extends Profile
+{
 
     private Gender u_gender;
     private String u_card;
@@ -23,7 +24,8 @@ public class User extends Profile {
      * @param u_gender the gender identity of the user
      * @param u_card the payment card number associated with the user account
      */
-    public User(int u_id, String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone, Gender u_gender, String u_card) {
+    public User(int u_id, String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone, Gender u_gender, String u_card)
+    {
         super(u_id, p_email, p_username, p_password, p_name, p_lastname, p_telephone);
         this.u_gender = u_gender;
         this.u_card = u_card;
@@ -41,7 +43,8 @@ public class User extends Profile {
      * @param u_gender the gender identity of the user
      * @param u_card the payment card number associated with the user account
      */
-    public User(String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone, Gender u_gender, String u_card) {
+    public User(String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone, Gender u_gender, String u_card)
+    {
         super(p_email, p_username, p_password, p_name, p_lastname, p_telephone);
         this.u_gender = u_gender;
         this.u_card = u_card;
@@ -52,7 +55,8 @@ public class User extends Profile {
      *
      * @return the Gender enum value representing the user's gender identity
      */
-    public Gender getGender() {
+    public Gender getGender()
+    {
         return u_gender;
     }
 
@@ -61,7 +65,8 @@ public class User extends Profile {
      *
      * @param u_gender the new Gender enum value to assign to the user
      */
-    public void setGender(Gender u_gender) {
+    public void setGender(Gender u_gender)
+    {
         this.u_gender = u_gender;
     }
 
@@ -70,7 +75,8 @@ public class User extends Profile {
      *
      * @return the complete payment card number as a string
      */
-    public String getCard() {
+    public String getCard()
+    {
         return u_card;
     }
 
@@ -79,7 +85,8 @@ public class User extends Profile {
      *
      * @param u_card the new payment card number to associate with the user
      */
-    public void setCard(String u_card) {
+    public void setCard(String u_card)
+    {
         this.u_card = u_card;
     }
 
@@ -89,7 +96,8 @@ public class User extends Profile {
      * @return the username of the user as the string representation
      */
     @Override
-    public String toString() {
+    public String toString()
+    {
         return super.getUsername();
     }
 
@@ -99,7 +107,8 @@ public class User extends Profile {
      * @return a formatted string representation of the user profile with sensitive card information partially masked
      */
     @Override
-    public String show() {
+    public String show()
+    {
         return "User {" + super.toString() + ", Gender: " + u_gender + (u_card != null ? ", Card: **** **** **** " + u_card.substring(12, 16) : "") + "}";
     }
 }

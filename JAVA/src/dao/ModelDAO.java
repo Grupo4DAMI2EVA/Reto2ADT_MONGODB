@@ -13,7 +13,8 @@ import model.User;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public interface ModelDAO {
+public interface ModelDAO
+{
 
     /**
      * Retrieves a list of all users from the data store. This method should return all user records with their complete profile information, typically used for administrative purposes or user management.
