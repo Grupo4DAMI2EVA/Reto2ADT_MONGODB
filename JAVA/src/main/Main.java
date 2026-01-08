@@ -11,8 +11,7 @@ import javafx.stage.Stage;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public class Main extends Application
-{
+public class Main extends Application {
 
     /**
      * The main entry point for all JavaFX applications. This method is called after the init method has returned, and after the system is ready for the application to begin running. It creates the main controller instance and displays the login window.
@@ -21,8 +20,7 @@ public class Main extends Application
      * @throws Exception if the application initialization fails, including controller creation errors or window display issues
      */
     @Override
-    public void start(Stage stage) throws Exception
-    {
+    public void start(Stage stage) throws Exception {
         Controller controller = new Controller();
         controller.showWindow(stage);
     }
@@ -32,8 +30,7 @@ public class Main extends Application
      *
      * @param args the command line arguments passed to the application. These arguments can be used to configure application behavior
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
 }

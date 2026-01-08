@@ -5,14 +5,12 @@ package model;
  *
  * The class maintains the authenticated user's profile data during the application session and allows different parts of the application to access user information without passing references throughout the call stack.
  */
-public class LoggedProfile
-{
+public class LoggedProfile {
 
     private static LoggedProfile instance;
     private Profile currentProfile;
 
-    private LoggedProfile()
-    {
+    private LoggedProfile() {
     }
 
     /**
@@ -20,10 +18,8 @@ public class LoggedProfile
      *
      * @return the single instance of LoggedProfile
      */
-    public static LoggedProfile getInstance()
-    {
-        if (instance == null)
-        {
+    public static LoggedProfile getInstance() {
+        if (instance == null) {
             instance = new LoggedProfile();
         }
         return instance;
@@ -34,8 +30,7 @@ public class LoggedProfile
      *
      * @param profile the Profile object representing the logged-in user
      */
-    public void setProfile(Profile profile)
-    {
+    public void setProfile(Profile profile) {
         this.currentProfile = profile;
     }
 
@@ -44,16 +39,14 @@ public class LoggedProfile
      *
      * @return the current Profile object, or null if no user is logged in
      */
-    public Profile getProfile()
-    {
+    public Profile getProfile() {
         return currentProfile;
     }
 
     /**
      * Clears the currently logged-in user profile. This method is typically called during logout to remove the user's profile information from the session and reset the authentication state.
      */
-    public void clear()
-    {
+    public void clear() {
         this.currentProfile = null;
     }
 }
