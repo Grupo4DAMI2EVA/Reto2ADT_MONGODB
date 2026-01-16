@@ -24,8 +24,7 @@ import model.Profile;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public class VerifyActionWindowController implements Initializable
-{
+public class VerifyActionWindowController implements Initializable {
 
     private Controller controller;
     private Profile profile;
@@ -51,8 +50,7 @@ public class VerifyActionWindowController implements Initializable
      * @param controller the main application controller that manages business logic and data operations
      * @param userDelete the unique identifier of the user to be deleted, or -1 if deleting the currently logged-in user
      */
-    public void setController(Controller controller, int userDelete)
-    {
+    public void setController(Controller controller, int userDelete) {
         this.controller = controller;
         this.userDelete = userDelete;
 
@@ -65,8 +63,7 @@ public class VerifyActionWindowController implements Initializable
      *
      * @param callback the runnable function to execute after user deletion
      */
-    public void setOnUserDeletedCallback(Runnable callback)
-    {
+    public void setOnUserDeletedCallback(Runnable callback) {
         onUserDeletedCallback = callback;
     }
 
@@ -74,18 +71,15 @@ public class VerifyActionWindowController implements Initializable
      * Handles the confirmation action when the confirm button is clicked. This method navigates to the CAPTCHA verification window for additional security validation before proceeding with the user deletion operation. It transfers the callback function to the next verification step.
      *
      */
-    public void confirmButton()
-    {
-        try
-        {
+    public void confirmButton() {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VerifyCaptchaWindow.fxml"));
             Parent parentWindow = loader.load();
 
             VerifyCaptchaWindowController nextController = loader.getController();
             nextController.setController(controller, userDelete);
 
-            if (onUserDeletedCallback != null)
-            {
+            if (onUserDeletedCallback != null) {
                 nextController.setOnUserDeletedCallback(onUserDeletedCallback);
             }
 
@@ -93,9 +87,7 @@ public class VerifyActionWindowController implements Initializable
             actualWindow.setTitle("Capcha");
             actualWindow.setResizable(false);
             actualWindow.setScene(new Scene(parentWindow));
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ShowAlert.showAlert("Error", "Unable to open verification window.", Alert.AlertType.ERROR);
         }
     }
@@ -103,8 +95,7 @@ public class VerifyActionWindowController implements Initializable
     /**
      * Handles the cancellation action when the cancel button is clicked. This method closes the verification window without performing any further actions, effectively aborting the verification process.
      */
-    public void cancelButton()
-    {
+    public void cancelButton() {
         Stage stage = (Stage) cancelBttn.getScene().getWindow();
         stage.close();
     }
@@ -116,7 +107,6 @@ public class VerifyActionWindowController implements Initializable
      * @param rb the resources used to localize the root object, or null if the root object was not localized
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
     }
 }

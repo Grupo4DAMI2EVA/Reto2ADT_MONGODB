@@ -10,15 +10,13 @@ import java.util.ResourceBundle;
  *
  * The pool is configured with optimal parameters for connection management, including initial size, maximum connections, and timeout settings to ensure reliable database access while preventing resource exhaustion.
  */
-public class ConnectionPool
-{
+public class ConnectionPool {
 
     // Pool unique instance
     private static final BasicDataSource DATASOURCE;
 
     // Pool static configuration
-    static
-    {
+    static {
         DATASOURCE = new BasicDataSource();
 
         // Import configuration from classConfig.properties file
@@ -43,8 +41,7 @@ public class ConnectionPool
      * @return a Connection object that can be used to execute SQL statements
      * @throws SQLException if a database access error occurs or the maximum wait time for a connection is exceeded
      */
-    public static Connection getConnection() throws SQLException
-    {
+    public static Connection getConnection() throws SQLException {
         return DATASOURCE.getConnection();
     }
 }

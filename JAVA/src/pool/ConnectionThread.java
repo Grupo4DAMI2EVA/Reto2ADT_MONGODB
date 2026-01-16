@@ -9,8 +9,7 @@ import java.sql.SQLException;
  *
  * The thread obtains a connection from the pool, maintains it for a specified duration, and automatically releases it after use with configurable delay for connection reuse optimization.
  */
-public class ConnectionThread extends Thread
-{
+public class ConnectionThread extends Thread {
 
     private int delay = 30;
     private boolean end = false;
@@ -23,8 +22,7 @@ public class ConnectionThread extends Thread
      *
      * @param delay the number of seconds to wait before releasing the connection after it's no longer needed, allowing for connection reuse
      */
-    public ConnectionThread(int delay)
-    {
+    public ConnectionThread(int delay) {
         this.delay = delay;
     }
 
@@ -34,10 +32,8 @@ public class ConnectionThread extends Thread
      * @return the Connection object for database operations
      * @throws OurException if an error occurred while obtaining the connection from the pool during thread execution
      */
-    public Connection getConnection() throws OurException
-    {
-        if (exception != null)
-        {
+    public Connection getConnection() throws OurException {
+        if (exception != null) {
             throw exception;
         }
 
@@ -49,16 +45,14 @@ public class ConnectionThread extends Thread
      *
      * @return true if the connection is ready for use, false otherwise
      */
-    public boolean isReady()
-    {
+    public boolean isReady() {
         return ready;
     }
 
     /**
      * Signals the thread to release the connection and terminate. This method interrupts the thread's waiting state and initiates the connection release process with the configured delay.
      */
-    public void releaseConnection()
-    {
+    public void releaseConnection() {
         this.end = true;
         this.interrupt();
     }
@@ -67,23 +61,16 @@ public class ConnectionThread extends Thread
      * The main execution method of the connection thread. This method obtains a connection from the pool, maintains it until released, and then waits for the specified delay before closing the connection. It handles SQL exceptions and converts them to application-specific exceptions.
      */
     @Override
-    public void run()
-    {
-        try
-        {
+    public void run() {
+        try {
             con = ConnectionPool.getConnection();
             ready = true;
 
-            while (!end)
-            {
-                try
-                {
+            while (!end) {
+                try {
                     Thread.sleep(100);
-                }
-                catch (InterruptedException e)
-                {
-                    if (end)
-                    {
+                } catch (InterruptedException e) {
+                    if (end) {
                         break;
                     }
 
@@ -91,29 +78,19 @@ public class ConnectionThread extends Thread
                 }
             }
 
-            try
-            {
+            try {
                 Thread.sleep(delay * 1000);
-            }
-            catch (InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             exception = new OurException("Error obtaining a connection from pool: " + ex.getMessage());
-        } finally
-        {
-            try
-            {
-                if (con != null)
-                {
+        } finally {
+            try {
+                if (con != null) {
                     con.close();
                 }
-            }
-            catch (SQLException ex)
-            {
+            } catch (SQLException ex) {
                 exception = new OurException("Error returning the connection: " + ex.getMessage());
             }
         }

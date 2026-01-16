@@ -5,8 +5,7 @@ package exception;
  *
  * Extends the standard Exception class to provide customized error handling with meaningful messages that can be displayed to users or logged for debugging.
  */
-public class OurException extends Exception
-{
+public class OurException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,8 +14,7 @@ public class OurException extends Exception
      *
      * @param mensaje the detail message that explains the reason for the exception
      */
-    public OurException(String mensaje)
-    {
+    public OurException(String mensaje) {
         super(mensaje);
     }
 }

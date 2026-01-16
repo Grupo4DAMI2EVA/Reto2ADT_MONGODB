@@ -23,8 +23,7 @@ import model.Profile;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public class VerifyCaptchaWindowController implements Initializable
-{
+public class VerifyCaptchaWindowController implements Initializable {
 
     private Controller controller;
     private Profile profile;
@@ -54,8 +53,7 @@ public class VerifyCaptchaWindowController implements Initializable
      * @param controller the main application controller that manages business logic and data operations
      * @param userDelete the unique identifier of the user to be deleted, or -1 if deleting the currently logged-in user
      */
-    public void setController(Controller controller, int userDelete)
-    {
+    public void setController(Controller controller, int userDelete) {
         this.controller = controller;
         this.userDelete = userDelete;
 
@@ -70,16 +68,14 @@ public class VerifyCaptchaWindowController implements Initializable
      *
      * @param callback the runnable function to execute after user deletion
      */
-    public void setOnUserDeletedCallback(Runnable callback)
-    {
+    public void setOnUserDeletedCallback(Runnable callback) {
         onUserDeletedCallback = callback;
     }
 
     /**
      * Generates a new random CAPTCHA code and updates the display. This method creates a 4-digit random verification code, displays it to the user, clears any previous error messages, and resets the input field to prepare for new user input.
      */
-    private void generateAndDisplayCode()
-    {
+    private void generateAndDisplayCode() {
         code = new Random().nextInt(10000);
         codeLabel.setText(String.valueOf(code));
         codeTextField.clear();
@@ -91,45 +87,35 @@ public class VerifyCaptchaWindowController implements Initializable
      * @throws OurException if the user deletion operation fails due to database constraints, data access issues, or system errors
      */
     @FXML
-    private void confirmButton()
-    {
+    private void confirmButton() {
         String inputCode = codeTextField.getText().trim();
 
-        if (inputCode.isEmpty())
-        {
+        if (inputCode.isEmpty()) {
             errorLabel.setText("Please enter the code.");
             return;
         }
 
-        if (!inputCode.equals(String.valueOf(code)))
-        {
+        if (!inputCode.equals(String.valueOf(code))) {
             errorLabel.setText("Incorrect code. Try again.");
             generateAndDisplayCode();
             return;
         }
 
-        try
-        {
+        try {
             boolean success = controller.deleteUser(userDelete != -1 ? userDelete : profile.getId());
 
-            if (success)
-            {
-                if (onUserDeletedCallback != null)
-                {
+            if (success) {
+                if (onUserDeletedCallback != null) {
                     onUserDeletedCallback.run();
                 }
 
                 ShowAlert.showAlert("Success", "User deleted successfully.", Alert.AlertType.INFORMATION);
 
                 ((Stage) confirmBttn.getScene().getWindow()).close();
-            }
-            else
-            {
+            } else {
                 ShowAlert.showAlert("Error", "User could not be deleted.", Alert.AlertType.ERROR);
             }
-        }
-        catch (OurException ex)
-        {
+        } catch (OurException ex) {
             ShowAlert.showAlert("Error", ex.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -137,8 +123,7 @@ public class VerifyCaptchaWindowController implements Initializable
     /**
      * Handles the cancellation action when the cancel button is clicked. This method closes the CAPTCHA verification window without performing the deletion operation, effectively aborting the verification process.
      */
-    public void cancelButton()
-    {
+    public void cancelButton() {
         Stage stage = (Stage) cancelBttn.getScene().getWindow();
         stage.close();
     }
@@ -150,7 +135,6 @@ public class VerifyCaptchaWindowController implements Initializable
      * @param rb the resources used to localize the root object, or null if the root object was not localized
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
     }
 }

@@ -7,8 +7,7 @@ package exception;
  *
  * @author Kevin, Alex, Victor, Ekaitz
  */
-public class ErrorMessages
-{
+public class ErrorMessages {
 
     /**
      * Error message displayed when user registration fails. This typically occurs due to database constraints, connection issues, or system errors during the registration process.

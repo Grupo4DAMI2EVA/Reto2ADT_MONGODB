@@ -5,8 +5,7 @@ package model;
  *
  * Administrators have additional security features and access rights compared to regular users, allowing them to manage system-wide operations and user accounts.
  */
-public class Admin extends Profile
-{
+public class Admin extends Profile {
 
     private String a_current_account;
 
@@ -22,8 +21,7 @@ public class Admin extends Profile
      * @param p_telephone the telephone number of the administrator
      * @param a_current_account the current administrative account number or identifier
      */
-    public Admin(int p_id, String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone, String a_current_account)
-    {
+    public Admin(int p_id, String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone, String a_current_account) {
         super(p_id, p_email, p_username, p_password, p_name, p_lastname, p_telephone);
         this.a_current_account = a_current_account;
     }
@@ -39,8 +37,7 @@ public class Admin extends Profile
      * @param p_telephone the telephone number of the administrator
      * @param a_current_account the current administrative account number or identifier
      */
-    public Admin(String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone, String a_current_account)
-    {
+    public Admin(String p_email, String p_username, String p_password, String p_name, String p_lastname, String p_telephone, String a_current_account) {
         super(p_email, p_username, p_password, p_name, p_lastname, p_telephone);
         this.a_current_account = a_current_account;
     }
@@ -50,8 +47,7 @@ public class Admin extends Profile
      *
      * @return the current administrative account number or identifier
      */
-    public String getCurrent_account()
-    {
+    public String getCurrent_account() {
         return a_current_account;
     }
 
@@ -60,8 +56,7 @@ public class Admin extends Profile
      *
      * @param a_current_account the new administrative account number or identifier to set
      */
-    public void setCurrent_account(String a_current_account)
-    {
+    public void setCurrent_account(String a_current_account) {
         this.a_current_account = a_current_account;
     }
 
@@ -71,8 +66,7 @@ public class Admin extends Profile
      * @return a formatted string representation of the administrator profile with sensitive account information partially masked
      */
     @Override
-    public String show()
-    {
+    public String show() {
         return "Admin {" + super.toString() + (a_current_account != null ? ", Current account: **** **** **** " + a_current_account.substring(12, 16) : null) + "}";
     }
 }
