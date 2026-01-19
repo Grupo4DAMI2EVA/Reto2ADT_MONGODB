@@ -44,6 +44,12 @@ public class Admin extends Profile
         super(p_email, p_username, p_password, p_name, p_lastname, p_telephone);
         this.a_current_account = a_current_account;
     }
+    
+    public Admin()
+    {
+        super();
+        this.a_current_account = "";
+    }
 
     /**
      * Retrieves the current administrative account identifier. This method returns the account number or identifier associated with the administrator's privileged access rights.

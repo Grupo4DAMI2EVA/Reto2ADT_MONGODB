@@ -50,6 +50,12 @@ public class User extends Profile
         this.u_card = u_card;
     }
 
+    public User() {
+        super(); // Llama al constructor vacío de Profile
+        this.u_gender = null;
+        this.u_card = "";
+    }
+
     /**
      * Retrieves the gender identity of the user.
      *

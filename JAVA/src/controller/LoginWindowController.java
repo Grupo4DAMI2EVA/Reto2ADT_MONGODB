@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
+import model.LoggedProfile;
 import model.Profile;
 import model.User;
 
@@ -88,6 +89,8 @@ public class LoginWindowController implements Initializable
 
             if (loggedIn != null)
             {
+                LoggedProfile.getInstance().setProfile(loggedIn);
+                
                 boolean isUser = loggedIn instanceof User;
                 String fxmlPath = isUser ? "/view/UserWindow.fxml" : "/view/AdminWindow.fxml";
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
