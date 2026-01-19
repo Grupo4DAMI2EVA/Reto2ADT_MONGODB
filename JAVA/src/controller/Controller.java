@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import dao.DBImplementation;
+import dao.*;
 import dao.ModelDAO;
 import exception.ErrorMessages;
 import exception.OurException;
@@ -45,7 +45,7 @@ public class Controller
     {
         try
         {
-            dao = new DBImplementation();
+            dao = new MongoImplements();
         }
         catch (Exception ex)
         {
